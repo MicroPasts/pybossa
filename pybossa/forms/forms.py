@@ -174,7 +174,8 @@ class GenericBulkTaskImportForm(object):
     _forms = { 'csv': _BulkTaskCSVImportForm,
               'gdocs': _BulkTaskGDImportForm,
               'epicollect': _BulkTaskEpiCollectPlusImportForm,
-              'flickr': _BulkTaskFlickrImportForm }
+              'flickr': _BulkTaskFlickrImportForm,
+              'dropbox': None }
 
     def __call__(self, form_name, *form_args, **form_kwargs):
         if form_name is None:

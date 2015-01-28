@@ -203,7 +203,8 @@ class Importer(object):
     def __init__(self):
         self._importers = {'csv': _BulkTaskCSVImport,
                            'gdocs': _BulkTaskGDImport,
-                           'epicollect': _BulkTaskEpiCollectPlusImport}
+                           'epicollect': _BulkTaskEpiCollectPlusImport,
+                           'dropbox': None}
         self._importer_constructor_params = {}
 
     def register_flickr_importer(self, flickr_params):
