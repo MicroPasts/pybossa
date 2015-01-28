@@ -244,6 +244,24 @@ class Google(object):
             consumer_secret=app.config['GOOGLE_CLIENT_SECRET'])
 
 
+class DropboxService(object):
+
+    def __init__(self, app=None):
+        self.app = app
+        if app is not None: # pragma: no cover
+            self.init_app(app)
+
+    def init_app(self, app):
+        self.oauth = OAuth().remote_app(
+            'dropbox',
+            base_url='https://www.dropbox.com/1/',
+            authorize_url='https://www.dropbox.com/1/oauth/authorize',
+            request_token_url='https://api.dropbox.com/1/oauth/request_token',
+            access_token_url='https://api.dropbox.com/1/oauth/access_token',
+            consumer_key=app.config['DROPBOX_APP_KEY'],
+            consumer_secret=app.config['DROPBOX_APP_SECRET'])
+
+
 def unicode_csv_reader(unicode_csv_data, dialect=csv.excel, **kwargs):
     # This code is taken from http://docs.python.org/library/csv.html#examples
     # csv.py doesn't do Unicode; encode temporarily as UTF-8:
