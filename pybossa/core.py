@@ -302,6 +302,20 @@ def setup_external_services(app):
         log_message = 'Flickr importer not available: %s' % str(inst)
         app.logger.error(log_message)
 
+    # Enable Dropbox if available
+    try:  # pragma: no cover
+        if (app.config['DROPBOX_APP_KEY'] and app.config['DROPBOX_APP_SECRET']):
+            dropbox.init_app(app)
+            from pybossa.view.dropbox import blueprint as dropbox_bp
+            app.register_blueprint(dropbox_bp, url_prefix='/dropbox')
+    except Exception as inst: # pragma: no cover
+        print type(inst)
+        print inst.args
+        print inst
+        print "Dropbox importer not available"
+        log_message = 'Dropbox importer not available: %s' % str(inst)
+        app.logger.error(log_message)
+
 
 def setup_geocoding(app):
     # Check if app stats page can generate the map

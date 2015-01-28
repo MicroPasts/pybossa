@@ -20,7 +20,7 @@ __all__ = ['sentinel', 'db', 'signer', 'mail', 'login_manager', 'facebook',
            'twitter', 'google', 'misaka', 'babel', 'uploader', 'debug_toolbar',
            'csrf', 'timeouts', 'ratelimits', 'user_repo', 'project_repo',
            'task_repo', 'blog_repo', 'auditlog_repo', 'newsletter', 'importer',
-           'flickr']
+           'flickr', 'dropbox']
 
 # CACHE
 from pybossa.sentinel import Sentinel
@@ -100,3 +100,6 @@ importer = Importer()
 # Flickr OAuth integration for importer
 from pybossa.flickr_service import FlickrService
 flickr = FlickrService()
+
+from pybossa.util import DropboxService
+dropbox = DropboxService()
