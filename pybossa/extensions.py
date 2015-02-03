@@ -101,5 +101,6 @@ importer = Importer()
 from pybossa.flickr_service import FlickrService
 flickr = FlickrService()
 
+# Dropbox OAuth integration for importer
 from pybossa.util import DropboxService
 dropbox = DropboxService()

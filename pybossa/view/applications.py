@@ -554,6 +554,9 @@ def import_task(short_name):
                                    **template_args)
         if importer_type == 'flickr':
             template_args['albums'] = flickr.get_user_albums(session)
+        if importer_type == 'dropbox':
+            from pybossa.core import dropbox
+            template_args['folders'] = dropbox.get_public_folders(session)
         if importer_type == 'gdocs' and request.args.get('template'):  # pragma: no cover
             template = request.args.get('template')
             form.googledocs_url.data = template_tasks.get(template)

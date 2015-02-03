@@ -17,7 +17,7 @@
 # along with PyBossa.  If not, see <http://www.gnu.org/licenses/>.
 
 from datetime import timedelta
-from functools import update_wrapper
+from functools import update_wrapper, partial
 import csv
 import codecs
 import cStringIO
@@ -252,14 +252,32 @@ class DropboxService(object):
             self.init_app(app)
 
     def init_app(self, app):
+        from flask import session
         self.oauth = OAuth().remote_app(
             'dropbox',
             base_url='https://www.dropbox.com/1/',
             authorize_url='https://www.dropbox.com/1/oauth/authorize',
             request_token_url='https://api.dropbox.com/1/oauth/request_token',
             access_token_url='https://api.dropbox.com/1/oauth/access_token',
+            request_token_params={'signature_method': 'PLAINTEXT'},
             consumer_key=app.config['DROPBOX_APP_KEY'],
             consumer_secret=app.config['DROPBOX_APP_SECRET'])
+        tokengetter = partial(self.get_dropbox_token, session)
+        self.oauth.tokengetter(tokengetter)
+
+    def get_public_folders(self, session):
+        if (session.get('dropbox_user') is not None and
+                session.get('dropbox_token') is not None):
+            folders = self.oauth.get('https://api.dropbox.com/1/shared_folders').data
+            caca
+            return folders
+        return []
+
+    def get_dropbox_token(self, session):
+        token = session.get('dropbox_token')
+        if token is not None:
+            token = (token['oauth_token'], token['oauth_token_secret'])
+        return token
 
 
 def unicode_csv_reader(unicode_csv_data, dialect=csv.excel, **kwargs):
